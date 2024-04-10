@@ -1,1 +1,51 @@
-/* You can add global styles to this file, and also import other style files */
+.monthly-smart-mails-graph{
+    font-size: 30px;
+    color: #d410d4;
+    font-weight: 700;
+    left: 98px;
+    position: absolute;
+    top: -13px;
+    
+
+}
+.custom-label {
+    border-radius: 19px;
+    width: 50px;
+    font-size: 19px;
+    color: white;
+    height: 34px;
+    align-items: center;
+    display: inline-grid;
+    text-align: center;
+    margin: -6px;
+
+}
+.custom-label-bottom {
+    border-radius: 19px;
+    width: 50px;
+    font-size: 19px;
+    color: white;
+    height: 34px;
+    align-items: center;
+    display: inline-grid;
+    text-align: center;
+}
+
+.custom-legend-label {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+g.highcharts-legend-item.highcharts-pie-series {
+    display: none;
+}
+g.highcharts-legend-item.highcharts-pie-series.highcharts-color-2 {
+    display: none;
+}
+
+.highcharts-point.highcharts-column {
+    border-top: 1px solid black;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
