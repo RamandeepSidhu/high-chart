@@ -70,7 +70,7 @@ export class AppComponent implements AfterViewInit {
           type: 'area',
           name: 'Male',
           color: 'rgba(0, 0, 255, 0.3)', // Light blue for Male
-          lineColor: 'rgba(0, 0, 255, 1)', // Dark blue border for Male
+          lineColor: 'rgba(0, 0, 255, 1)', 
           data: [
             [Date.UTC(2024, 2, 10), 50],
             [Date.UTC(2024, 2, 11), 100],
