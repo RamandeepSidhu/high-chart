@@ -36,8 +36,8 @@
     font-weight: 800;
 }
 
-g.highcharts-legend-item.highcharts-pie-series {
-    display: none;
+g.highcharts-legend-item.highcharts-pie-series{
+    display: none !important;
 }
 g.highcharts-legend-item.highcharts-pie-series.highcharts-color-2 {
     display: none;
@@ -49,3 +49,6 @@ g.highcharts-legend-item.highcharts-pie-series.highcharts-color-2 {
     border-right: none;
     border-bottom: none;
   }
+  rect.highcharts-point {
+    display: none;
+}

@@ -16,6 +16,8 @@ export class AppComponent implements AfterViewInit {
     this.createBarChart();
     this.createCustomAnimatedPieChart();
     this.maleFemaleGraph();
+    this.agePrecentageGraph();
+    this.emotionsBar();
 
   }
   AreaChart() {
@@ -69,8 +71,8 @@ export class AppComponent implements AfterViewInit {
         {
           type: 'area',
           name: 'Male',
-          color: 'rgba(0, 0, 255, 0.3)', // Light blue for Male
-          lineColor: 'rgba(0, 0, 255, 1)', 
+          color: '#e8effa', // Light blue for Male
+          lineColor: '#0864cd', 
           data: [
             [Date.UTC(2024, 2, 10), 50],
             [Date.UTC(2024, 2, 11), 100],
@@ -86,8 +88,8 @@ export class AppComponent implements AfterViewInit {
         {
           type: 'area',
           name: 'Female',
-          color: 'rgba(255, 0, 0, 0.3)', // Light red for Female
-          lineColor: 'rgba(255, 0, 0, 1)', // Dark red border for Female
+          color: '#e8e1ef', // Light red for Female
+          lineColor: '#ff5184', // Dark red border for Female
           data: [
             [Date.UTC(2024, 2, 10), 10],
             [Date.UTC(2024, 2, 11), 20],
@@ -139,7 +141,6 @@ export class AppComponent implements AfterViewInit {
           pointPadding: 0,
           borderColor: 'transparent',
           pointWidth: 40,
-          borderWidth: 1,
           dataLabels: {
             enabled: true,
             format: '{point.y:.0f}%',
@@ -155,32 +156,32 @@ export class AppComponent implements AfterViewInit {
           type: 'column',
           name: 'Male',
           data: [25, 40, 15, 10, 5],
-          color: 'rgba(0, 0, 255, 0.3)',
-          borderColor: 'rgba(0, 0, 255, 1)',
+          color: '#dcf0fc',
+          borderColor: '#169de8',
           dataLabels: {
             style: {
-              color: 'rgba(0, 0, 255, 1)',
-            }
+              color: '#169de8',
+            },
+            borderWidth: 0,
           },
         },
         {
           type: 'column',
           name: 'Female',
           data: [30, 35, 10, 15, 10],
-          color: 'rgba(255, 0, 0, 0.3)',
-          borderColor: 'rgba(255, 0, 0, 1)',
+          color: '#ffe3eb',
+          borderColor: '#ff5184',
           dataLabels: {
             style: {
-              color: 'rgba(255, 0, 0, 1)',
+              color: '#ff5184',
             }
           },
         },
       ],
     };
 
-    const chart = Highcharts.chart('barGraph', chartOptionsBar);
+  Highcharts.chart('barGraph', chartOptionsBar);
   
-
   }
   fillDataValue: any = '25'
   getSubtitle() {
@@ -190,7 +191,7 @@ export class AppComponent implements AfterViewInit {
   }
   createCustomAnimatedPieChart() {
     const chartOptionsPie: Highcharts.Options = {
-      colors: ['#b05bec', '#A74BB3', '#D289C0', '#F5B8E2'],
+      colors: ['#6240d9', '#8b6aff', '#b09aff', '#d9ceff'],
       chart: {
         type: 'pie'
       },
@@ -274,7 +275,7 @@ export class AppComponent implements AfterViewInit {
     Highcharts.chart('PieChart', chartOptionsPie);
   }
 
-  maleFemaleGraph() {
+   maleFemaleGraph() {
     const chartOptionsMFBar: Highcharts.Options = {
       chart: {
         type: 'column',
@@ -289,43 +290,247 @@ export class AppComponent implements AfterViewInit {
         title: {
           text: 'Percentage'
         },
+        
         labels: {
           formatter: function() {
-            return '<span class="custom-label-values" style="font-size:17px;>' + this.value + '%</span>';
-
+            return '<span class="custom-label-values" style="font-size:17px;">' + this.value + '%</span>';
           }
         }
       },
       plotOptions: {
         column: {
-          borderRadius: 5,
-          borderWidth: 0,
+          borderWidth: 5, 
+          dataLabels: {
+            enabled: true,
+            formatter: function() {
+              return '<span class="custom-label-values" style="font-size:17px;">' + this.y + '%</span>';
+            }
+          }
+        },
+      },
+      credits: {
+        enabled: false, // Disable Highcharts credits
+      },
+      series: [{
+        type: 'column',
+        name: 'Male',
+        color: '#d9e7f7', 
+        data: [48],
+        borderColor: {
+          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+          stops: [
+            [0, '#0563cc'],
+            [0.01, 'transparent'], 
+          ]
+        },
+      }, {
+        type: 'column',
+        name: 'Female',
+        color: '#ffe3eb', 
+        data: [62],
+        borderColor: {
+          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+          stops: [
+            [0, '#ff5184'],
+            [0.01, 'transparent'], 
+          ]
+        },
+      }]
+    };
+  
+    Highcharts.chart('maleFemale', chartOptionsMFBar);
+  }
+
+  agePrecentageGraph() {
+    const data:any = [
+      { name: '<20', value: 45 },
+      { name: '20-29', value: 32 },
+      { name: '30-45', value: 22 },
+      { name: '>45', value: 1 }
+    ];
+    const chartOptionsagePrecentageBar: Highcharts.Options = {
+      chart: {
+        type: 'column',
+      },
+      title: {
+        useHTML: true,
+        text: '<span class="custom-label-values" style="font-size:20px; position:absolute; top:40px;">Age (%) <span style="background-color: #b6c1bd; color:#fff; border-radius:5px; width:10px; border-radius:17px; padding:6px 11px;"> ? </span></span>',
+        align: 'left',
+        style: {
+          fontWeight: 'bold', 
+          color: '#333', 
+        },
+      },
+      xAxis: {
+        categories: data.map((item: any) => item.name)
+      
+     
+      },
+      yAxis: {
+        title: {
+          text: 'Amount (%)',
+        },
+        labels: {
+          formatter: function() {
+            return '<span class="custom-label-values" style="font-size:17px;">' + this.value + '%</span>';
+          },
+        },
+      },
+      credits: {
+        enabled: false,
+      },
+      tooltip:{
+        enabled: false,
+      },
+      plotOptions: {
+        column: {
+          borderWidth: 5,
           dataLabels: {
             enabled: true,
             formatter: function() {
               return '<span class="custom-label-values" style="font-size:17px;">' + this.y + '%</span>';
             },
-          }
-        }
+          },
+          pointPlacement: -0.2,
+        },
+     
       },
+      legend: {
+        layout: 'horizontal',
+        useHTML: true,
+        align: 'right',
+        verticalAlign: 'top',
+        x: -10,
+        y: 100
+    },
       series: [{
         type: 'column',
-        name: 'Male',
-        color: 'rgba(0, 0, 255, 0.3)',
-        borderColor: 'rgba(0, 0, 255, 1)',
-        data: [48] ,
-      }, {
-        type: 'column',
-        name: 'Female',
-        color: 'rgba(255, 0, 0, 0.3)',
-        borderColor: 'rgba(255, 0, 0, 1)', 
-        data: [62] 
-      }]
+        name: data.map((item: any) => {
+          return '<span class="top-name" style="font-size:17px; color:#1fcf52; background-color:#d4f5dc; margin: 3px 11px;  border-radius:6px; height:30px; width:65px; display:inline-block; text-align:center; line-height:30px;padding: 0;"><li>' + '<span  style="font-size:17px; margin:-8px; position:relative; left:-6px">'+item.name+'</span>' + '</li></span>';
+        }).join(''),
+        events: {
+          legendItemClick: function () {
+            return false; 
+          },
+        },
+          data: data.map((item: any) => ({
+          y: parseFloat(item.value),
+          color: '#d4f5dc',
+          dataLabels: {
+            enabled: true,
+            format: '<span class="custom-label-values" style="font-size:17px; color:#1fcf52">{y}%</span>',
+          },
+          borderColor: {
+            linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+            stops: [
+              [0, '#1fcf52'],
+              [0.01, 'transparent'],
+            ],
+          },
+        })),
+      
+      }],
     };
-  
-   Highcharts.chart('maleFemale', chartOptionsMFBar);
-  }
-   
+    
+    Highcharts.chart('agePrecentage', chartOptionsagePrecentageBar);
+    
+    }
+    
+
+    emotionsBar() {
+      const data: any = [
+        { name: '😐', value: 82 },
+        { name: '😆', value: 6 },
+        { name: '😓', value: 0 },
+        { name: '😯', value: 1 }
+      ];
+    
+      const colors = ['#eaecec', '#f6edcd', '#d9f4e1', '#ffe0e9'];
+      const topColors = ['#96a09e', '#d1a401', '#74e392', '#ff91b0'];
+
+      const chartOptionsageEmotionsBar: Highcharts.Options = {
+        chart: {
+          type: 'column',
+        },
+        title: {
+          useHTML: true,
+          text: '<span class="custom-label-values" style="font-size:20px; position:absolute; top:40px;">Emotions (%)</span>',
+          align: 'left',
+          style: {
+            fontWeight: 'bold',
+            color: '#333',
+          },
+        },
+        xAxis: {
+          categories: data.map((item: any) => item.name),
+          labels: {
+            style: {
+              fontSize: '20px', 
+            },
+          },
+        },
+        yAxis: {
+          title: {
+            text: 'Amount (%)',
+          },
+          labels: {
+            formatter: function() {
+              return '<span class="custom-label-values" style="font-size:17px;">' + this.value + '%</span>';
+            },
+          },
+        },
+        credits: {
+          enabled: false,
+        },
+        tooltip: {
+          enabled: false,
+        },
+        plotOptions: {
+          column: {
+            borderWidth: 5,
+            dataLabels: {
+              enabled: true,
+              formatter: function() {
+                return '<span class="custom-label-values" style="font-size:17px;">' + this.y + '%</span>';
+              },
+            },
+            pointPlacement: -0.2,
+          },
+        },
+        legend: {
+          layout: 'horizontal',
+          useHTML: true,
+          align: 'right',
+          verticalAlign: 'top',
+          x: -10,
+          y: 100,
+        },
+        series: [{
+          type: 'column',
+          name: '<span class="emoji" style="font-size:20px; letter-spacing:15px">' + data.map((item: any) => item.name).join('') + '</span>',
+          data: data.map((item: any, index: number) => ({
+            y: parseFloat(item.value),
+            color: colors[index],
+            dataLabels: {
+              enabled: true,
+              format: '<span class="custom-label-values" style="font-size:17px; color:' + topColors[index] + '">{y}%</span>',
+            },
+            borderColor: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, topColors[index]],
+                [0.01, 'transparent'],
+              ],
+            },
+          })),
+        
+        }],
+      };
+    
+      Highcharts.chart('emotionsBar', chartOptionsageEmotionsBar);
+    }
+    
+    
 }
 
 
